@@ -131,3 +131,5 @@ CREATE TABLE Transfer_cash_data(
     CONSTRAINT FK_id_user_transfer FOREIGN KEY(id_user_contact)
     REFERENCES User_contacts(id)
 );
+
+
