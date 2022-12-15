@@ -15,7 +15,7 @@ CREATE TABLE User(
     dni INT NOT NULL,
     cuil VARCHAR(13),
     name_surname TEXT(40),
-    account_num INT NOT NULL,
+    account_num VARCHAR(10) NOT NULL,
     id_card_user INT NOT NULL,
     email VARCHAR(90),
     phone INT,
@@ -33,7 +33,7 @@ CREATE TABLE Coin(
 /* CREATE TABLE ACCOUNT */
 CREATE TABLE Account(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cvu INT NOT NULL,
+    cvu VARCHAR(20) NOT NULL,
     alias VARCHAR(50),
     id_user INT NOT NULL,
     id_coin INT NOT NULL,
