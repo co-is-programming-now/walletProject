@@ -4,8 +4,9 @@ USE virtualwallet;
 /* CREATE TABLE CARD */
 CREATE TABLE Card(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name TEXT NOT NULL,
-    id_account_user INT NOT NULL,
+    name_card TEXT NOT NULL,
+    IIN VARCHAR(30) NOT NULL,
+    CVV INT NOT NULL,
     state BOOLEAN NOT NULL
 );
 
@@ -13,56 +14,28 @@ CREATE TABLE Card(
 CREATE TABLE User(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dni INT NOT NULL,
-    cuil VARCHAR(13),
+    cuil VARCHAR(30),
     name_surname TEXT(40),
-    account_num VARCHAR(10) NOT NULL,
+    account_num VARCHAR(40) NOT NULL,
     id_card_user INT NOT NULL,
     email VARCHAR(90),
-    phone INT,
-    CONSTRAINT FK_id_card_user FOREIGN KEY (id_card_user)
-    REFERENCES Card(id)
+    phone INT
 );
 
 /* CREATE TABLE COIN */
 CREATE TABLE Coin(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name TEXT(30),
     type TEXT(30),
-    country text(80)
+    country TEXT(225)
 );
-
-/* CREATE TABLE ACCOUNT */
-CREATE TABLE Account(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cvu VARCHAR(20) NOT NULL,
-    alias VARCHAR(50),
-    id_user INT NOT NULL,
-    id_coin INT NOT NULL,
-    password VARCHAR(30),
-    id_bank INT NOT NULL,
-    id_history_mov INT NOT NULL,
-    CONSTRAINT FK_id_user FOREIGN KEY (id_user)
-    REFERENCES User(id),
-    CONSTRAINT FK_id_coin FOREIGN KEY (id_coin)
-    REFERENCES Coin(id)
-);
-
-ALTER TABLE Card
-ADD FOREIGN KEY (id_account_user) REFERENCES Account(id);
-
 
 /* CREATE TABLE BANK */
 CREATE TABLE Bank(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     location VARCHAR(90),
     name TEXT(60),
-    tel INT
-);
-
-/* CREATE TABLE TYPE_ERROR */
-CREATE TABLE Type_error(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title TEXT(50),
-    description TEXT(225)
+    tel VARCHAR(20)
 );
 
 /* CREATE TABLE MOVEMENTS */
@@ -71,6 +44,15 @@ CREATE TABLE Movements(
     type TEXT(30),
     details TEXT(225)
 );
+
+
+/* CREATE TABLE TYPE_ERROR */
+CREATE TABLE Type_error(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title TEXT(50),
+    description TEXT(225)
+);
+
 
 /* CREATE TABLE HISTORY OF MOVEMENTES */
 CREATE TABLE History_Movements(
@@ -86,16 +68,39 @@ CREATE TABLE History_Movements(
 );
 
 
+/* CREATE TABLE ACCOUNT */
+CREATE TABLE Account(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cbu VARCHAR(40) NOT NULL,
+    alias VARCHAR(50),
+    id_user INT NOT NULL,
+    id_coin INT NOT NULL,
+    id_card INT NOT NULL,
+    password VARCHAR(30),
+    id_bank INT NOT NULL,
+    id_history_mov INT NOT NULL,
+    CONSTRAINT FK_id_user FOREIGN KEY (id_user)
+    REFERENCES User(id),
+    CONSTRAINT FK_id_coin FOREIGN KEY (id_coin)
+    REFERENCES Coin(id),
+    CONSTRAINT FK_id_card FOREIGN KEY (id_card)
+    REFERENCES card(id)
+);
+
+
 /* CREATE TABLE USER_CONTACTS */
 CREATE TABLE User_contacts(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name_surname VARCHAR(80) NOT NULL,
+    id_contact_of INT NOT NULL,
     alias VARCHAR(50) NOT NULL,
-    cvu INT NOT NULL,
-    account_num INT NOT NULL,
+    cvu VARCHAR(22) NOT NULL,
+    account_num VARCHAR(12) NOT NULL,
     id_bank INT NOT NULL,
     CONSTRAINT FK_id_bank FOREIGN KEY (id_bank)
-    REFERENCES Bank(id)
+    REFERENCES bank(id),
+    CONSTRAINT FK_id_contact_of_user FOREIGN KEY (id_contact_of)
+    REFERENCES user(id)
 );
 
 /* CREATE TABLE RECIVE CASH DATA */
@@ -104,7 +109,7 @@ CREATE TABLE Recive_cash_data(
     id_account_recive INT NOT NULL,
     date DATE NOT NULL,
     hour TIME NOT NULL,
-    amount DECIMAL NOT NULL,
+    amount REAL NOT NULL DEFAULT 0,
     id_coin INT NOT NULL,
     id_user_contact INT NOT NULL,
     CONSTRAINT FK_id_account_recive FOREIGN KEY(id_account_recive)
@@ -121,7 +126,7 @@ CREATE TABLE Transfer_cash_data(
     id_account_transfer INT NOT NULL,
     date DATE NOT NULL,
     hour TIME NOT NULL,
-    amount DECIMAL NOT NULL,
+    amount REAL NOT NULL DEFAULT 0,
     id_coin INT NOT NULL,
     id_user_contact INT NOT NULL,
     CONSTRAINT FK_id_account_transfer FOREIGN KEY(id_account_transfer)
