@@ -92,7 +92,7 @@ CREATE TABLE Account(
 CREATE TABLE User_contacts(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name_surname VARCHAR(80) NOT NULL,
-    id_contact_of INT NOT NULL,
+    id_contact_of INT NOT NULL DEFAULT 0,
     alias VARCHAR(50) NOT NULL,
     cvu VARCHAR(22) NOT NULL,
     account_num VARCHAR(12) NOT NULL,
