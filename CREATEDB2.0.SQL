@@ -166,7 +166,8 @@ CREATE TABLE fixed_term(
 
 /*FOREIGN KEY OPERATION REFERENCES OPERATION ID*/
 ALTER TABLE account
-ADD FOREIGN KEY (id_operation) REFERENCES operations(id);
+ADD FOREIGN KEY (id_operation) REFERENCES operations(id),
+ADD FOREIGN KEY (id_bank) REFERENCES bank(id);
 
 /*history of transfer foreign keys*/  
 ALTER TABLE history_of_transfer
@@ -182,3 +183,8 @@ ADD FOREIGN KEY (id_send_money) REFERENCES send_money(id);
 ALTER TABLE operations 
 ADD FOREIGN KEY (id_transfer) REFERENCES transfer(id),
 ADD FOREIGN KEY (id_fixed_term) REFERENCES fixed_term(id);
+
+/*TRANSFER FK*/
+ALTER TABLE transfer
+ADD FOREIGN KEY (id_transfer_movement) REFERENCES transfer_movement(id),
+ADD FOREIGN KEY  (id_history_transfer) REFERENCES history_of_transfer(id);
