@@ -38,19 +38,17 @@ CREATE TABLE Bank(
     tel VARCHAR(20)
 );
 
+CREATE TABLE answer(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(30),
+    description VARCHAR(225)
+);
+
 /* CREATE TABLE MOVEMENTS */
 CREATE TABLE Movements(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type TEXT(30),
     details TEXT(225)
-);
-
-
-/* CREATE TABLE TYPE_ERROR */
-CREATE TABLE Type_error(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title TEXT(50),
-    description TEXT(225)
 );
 
 
@@ -60,11 +58,8 @@ CREATE TABLE History_Movements(
     id_type_movement INT NOT NULL,
     state TEXT(22) NOT NULL,
     description VARCHAR(225),
-    id_error INT NOT NULL,
     CONSTRAINT FK_id_type_mov FOREIGN KEY (id_type_movement)
-    REFERENCES Movements(id),
-    CONSTRAINT FK_id_error FOREIGN KEY (id_error)
-    REFERENCES Type_error(id)
+    REFERENCES Movements(id)
 );
 
 
