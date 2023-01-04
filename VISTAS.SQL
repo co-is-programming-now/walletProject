@@ -8,18 +8,6 @@ LEFT JOIN account a ON a.id = u.id);
 
 #SELECT * FROM user_account_data;
 
-/*VISTA QUE ENSEÑE DATOS SOBRE RECIBO , NOMBRE DE USUARIO, ID CUENTA, QUE CUENTA LO RECIVE, QUE USUARIO, CANTIDAD ETC */
-
-CREATE VIEW RECIVE_DITAILS AS
-(SELECT u.name_surname AS USER, a.id AS ACCOUNT_ID, r.id_account_recive AS ACCOUNT_RECIVE, r.id_user_contact AS USER_CONTACT, amount
-FROM user u
-LEFT JOIN account a ON u.id = a.id
-RIGHT JOIN recive_cash_data r ON a.id = r.id
-);
-
-#SELECT * FROM RECIVE_DITAILS;
-
-
 /*VISTA PARA SABER CUANTOS CONTACTOS TIENE UN USUARIO*/   
 CREATE VIEW how_much_contacts AS   
 (SELECT u.name_surname AS USER, COUNT(uc.id_contact_of) AS USER_CONTACTS
@@ -30,21 +18,37 @@ HAVING count(*) > 0);
 
 #SELECT * FROM how_much_contacts;
 
-/*VISTA QUE MUESTRA, QUE CUENTA REALIZO UNA TRANSFERENCIA, A QUIEN, LA CANTIDAD FECHA Y HORA*/
-CREATE VIEW Transfer_data AS
-(SELECT u.name_surname AS USER, tcd.id_account_transfer AS account_send_to, tcd.id_user_contact AS contact_had_recived,tcd.amount, tcd.date, tcd.hour
-FROM transfer_cash_data tcd
-JOIN user u ON u.id = tcd.id_account_transfer
-ORDER BY amount desc
+
+
+/*VISTA PARA PODER VISUALIZAR LA INFORMACION DE LA TABLA HISTORIAL DE MOVIMINETOS*/
+CREATE or replace  VIEW visualice_history AS
+(SELECT u.name_surname AS ACCOUNT_MADE
+FROM user u
+JOIN history_of_movements hm ON hm.id_account_made = u.id,
+ (SELECT m.type AS MADE
+	FROM movements m
+    JOIN history_of_movements hm on hm.id_movement = m.id) AS m_type
 );
 
-#SELECT * FROM Transfer_data;
+select * from visualice_history;
+-- -- esto devuelve history_of_movements
+select type from history_of_movements;
+-- quiero crear una vista que me permita ver el nombre del usuario,
+--  el tipo de
+-- movimiento que realizo y el titulo de la respuesta
+-- pero esto es toda la query q pude desarrollar :(
 
-/*VISTA CONFIGURABLE PARA SABER CUAL FUE EL USUARIO QUE TRANSFIRIO EL MAYOR MONTO*/
-CREATE VIEW maxTransfer AS
-(SELECT u.name_surname AS MAX_TRANSFER, tcd.amount AS MAX_AMOUNT,date,hour
-FROM transfer_cash_data tcd
-JOIN user u ON u.id = tcd.id_account_transfer
-WHERE tcd.amount = (SELECT max(amount) FROM transfer_cash_data));
 
-#SELECT * FROM maxTransfer;
+
+
+
+/*VISTA QUE ENSEÑE DATOS la operacion de recivir dinero */
+
+CREATE VIEW get_money_operation_DITAILS AS
+(SELECT u.name_surname AS USER, a.id AS ACCOUNT_ID, gm.id_account_recive AS ACCOUNT_RECIVE, gm.id_contact_send AS USER_CONTACT, amount
+FROM user u
+LEFT JOIN account a ON u.id = a.id
+RIGHT JOIN get_money gm ON a.id = gm.id
+);
+
+#SELECT * FROM get_money_operation_DITAILS;

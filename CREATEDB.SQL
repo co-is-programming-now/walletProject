@@ -38,55 +38,29 @@ CREATE TABLE Bank(
     tel VARCHAR(20)
 );
 
+/*CRETE TABLE ANSWER*/
+CREATE TABLE answer(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type INT,
+    title VARCHAR(30),
+    details VARCHAR(225)
+);
+
+/*CREATE TABLE ORG*/
+CREATE TABLE org(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    NAME VARCHAR(100),
+    location VARCHAR(60),
+    phone INT DEFAULT 0,
+    email VARCHAR(100)
+);
+
 /* CREATE TABLE MOVEMENTS */
 CREATE TABLE Movements(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    type TEXT(30),
+    type VARCHAR(30),
     details TEXT(225)
 );
-
-
-/* CREATE TABLE TYPE_ERROR */
-CREATE TABLE Type_error(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title TEXT(50),
-    description TEXT(225)
-);
-
-
-/* CREATE TABLE HISTORY OF MOVEMENTES */
-CREATE TABLE History_Movements(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_type_movement INT NOT NULL,
-    state TEXT(22) NOT NULL,
-    description VARCHAR(225),
-    id_error INT NOT NULL,
-    CONSTRAINT FK_id_type_mov FOREIGN KEY (id_type_movement)
-    REFERENCES Movements(id),
-    CONSTRAINT FK_id_error FOREIGN KEY (id_error)
-    REFERENCES Type_error(id)
-);
-
-
-/* CREATE TABLE ACCOUNT */
-CREATE TABLE Account(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cbu VARCHAR(40) NOT NULL,
-    alias VARCHAR(50),
-    id_user INT NOT NULL,
-    id_coin INT NOT NULL,
-    id_card INT NOT NULL,
-    password VARCHAR(30),
-    id_bank INT NOT NULL,
-    id_history_mov INT NOT NULL,
-    CONSTRAINT FK_id_user FOREIGN KEY (id_user)
-    REFERENCES User(id),
-    CONSTRAINT FK_id_coin FOREIGN KEY (id_coin)
-    REFERENCES Coin(id),
-    CONSTRAINT FK_id_card FOREIGN KEY (id_card)
-    REFERENCES card(id)
-);
-
 
 /* CREATE TABLE USER_CONTACTS */
 CREATE TABLE User_contacts(
@@ -103,38 +77,128 @@ CREATE TABLE User_contacts(
     REFERENCES user(id)
 );
 
-/* CREATE TABLE RECIVE CASH DATA */
-CREATE TABLE Recive_cash_data(
+/* CREATE TABLE ACCOUNT */
+CREATE TABLE account(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cbu INT NOT NULL,
+    alias VARCHAR(50),
+    id_user INT NOT NULL,
+    id_coin INT NOT NULL,
+    id_card INT NOT NULL,
+    password VARCHAR(30),
+    id_bank INT NOT NULL,
+    CONSTRAINT FK_id_user FOREIGN KEY (id_user)
+    REFERENCES User(id),
+    CONSTRAINT FK_id_coin FOREIGN KEY (id_coin)
+    REFERENCES Coin(id),
+    CONSTRAINT FK_id_card FOREIGN KEY (id_card)
+    REFERENCES card(id),
+    CONSTRAINT FK_id_banc FOREIGN KEY (id_bank)
+    REFERENCES bank(id)
+);
+
+/* CREATE TABLE HISTORY OF MOVEMENTES */
+CREATE TABLE history_of_movements(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_movement INT NOT NULL,
+    id_account_made INT NOT NULL,
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_movement FOREIGN KEY (id_movement)
+    REFERENCES Movements(id),
+    CONSTRAINT FK_id_account_made FOREIGN KEY (id_account_made)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_answer FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
+);
+
+/*CREATE TABLE GET MONEY*/
+CREATE TABLE get_money(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_account_recive INT NOT NULL,
-    date DATE NOT NULL,
-    hour TIME NOT NULL,
-    amount REAL NOT NULL DEFAULT 0,
+    id_contact_send INT NOT NULL,
+    DATE DATE NOT NULL,
+    HOUR time NOT NULL,
+    AMOUNT DECIMAL NOT NULL DEFAULT 0,
     id_coin INT NOT NULL,
-    id_user_contact INT NOT NULL,
-    CONSTRAINT FK_id_account_recive FOREIGN KEY(id_account_recive)
-    REFERENCES Account(id),
-    CONSTRAINT FK_coin FOREIGN KEY(id_coin)
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_account_recive FOREIGN KEY (id_account_recive)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_contact_send FOREIGN KEY (id_contact_send)
+    REFERENCES user_contacts(id),
+    CONSTRAINT FK_id_coin_get FOREIGN KEY (id_coin)
     REFERENCES Coin(id),
-    CONSTRAINT FK_id_user_sender FOREIGN KEY(id_user_contact)
-    REFERENCES User_contacts(id)
+    CONSTRAINT FK_id_answer_get FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
 );
 
-/* CREATE TABLE TRANSFER CASH DATA */
-CREATE TABLE Transfer_cash_data(
+/*CREATE TABLE SEND MONEY*/
+CREATE TABLE send_money(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_account_transfer INT NOT NULL,
-    date DATE NOT NULL,
-    hour TIME NOT NULL,
-    amount REAL NOT NULL DEFAULT 0,
+    id_account_send INT NOT NULL,
+    id_contact_recive INT NOT NULL,
+    DATE DATE NOT NULL,
+    HOUR time NOT NULL,
+    AMOUNT DECIMAL NOT NULL DEFAULT 0,
     id_coin INT NOT NULL,
-    id_user_contact INT NOT NULL,
-    CONSTRAINT FK_id_account_transfer FOREIGN KEY(id_account_transfer)
-    REFERENCES Account(id),
-    CONSTRAINT FK_id_coin_transfer FOREIGN KEY(id_coin)
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_account_send FOREIGN KEY (id_account_send)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_contact_recive FOREIGN KEY (id_contact_recive)
+    REFERENCES user_contacts(id),
+    CONSTRAINT id_coin_send FOREIGN KEY (id_coin)
     REFERENCES Coin(id),
-    CONSTRAINT FK_id_user_transfer FOREIGN KEY(id_user_contact)
-    REFERENCES User_contacts(id)
+    CONSTRAINT id_answer_send FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
 );
 
+/*CREATE TABLE FIXED TERM*/
+CREATE TABLE fixed_term(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_user_headline INT NOT NULL,
+    inverted DECIMAL NOT NULL DEFAULT 0,
+    START DATE NOT NULL,
+    END DATE NOT NULL,
+    TNA VARCHAR(30),
+    interest_earned VARCHAR(30),
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_user_headline FOREIGN KEY (id_user_headline)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_answer_fixed_term FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
+);
+
+/*CREATE TABLE DONATION*/
+CREATE TABLE donations(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_donor_account INT NOT NULL,
+    DATE DATE NOT NULL,
+    AMOUNT INT NOT NULL DEFAULT 0,
+    id_coin INT NOT NULL,
+    id_org INT NOT NULL,
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_donor_account FOREIGN KEY (id_donor_account)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_coin_donor FOREIGN KEY (id_coin)
+    REFERENCES coin(id),
+    CONSTRAINT FK_org FOREIGN KEY (id_org)
+    REFERENCES org(id),
+    CONSTRAINT FK_id_answer_donation FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
+);
+
+/*CREATE TABLE INVESTMENT*/
+CREATE TABLE investment(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_investment_account INT NOT NULL,
+    id_coin_investment INT NOT NULL,
+    DATE DATE NOT NULL,
+    AMOUNT DECIMAL NOT NULL DEFAULT 0,
+    id_answer INT NOT NULL,
+    CONSTRAINT FK_id_investment_account FOREIGN KEY (id_investment_account)
+    REFERENCES account(id),
+    CONSTRAINT FK_id_coin_investment FOREIGN KEY (id_coin_investment)
+    REFERENCES coin(id),
+    CONSTRAINT FK_id_answer_investment FOREIGN KEY (id_answer)
+    REFERENCES answer(id)
+);
 
