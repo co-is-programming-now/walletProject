@@ -80,7 +80,7 @@ CREATE TABLE User_contacts(
 /* CREATE TABLE ACCOUNT */
 CREATE TABLE account(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cbu INT NOT NULL,
+    cbu BIGINT NOT NULL,
     alias VARCHAR(50),
     id_user INT NOT NULL,
     id_coin INT NOT NULL,
