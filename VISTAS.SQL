@@ -64,9 +64,5 @@ FROM user u
 SELECT * FROM get_money_operation_DITAILS;
 
 SELECT * FROM get_money;
-
-
- 
-
-
-
+select * from account;
+select * from user;
