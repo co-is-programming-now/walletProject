@@ -61,11 +61,11 @@ INSERT INTO bank VALUES
 INSERT INTO account VALUES 
 (DEFAULT, 8021911100083144920, 'arroz.seis.BINGO',1,3,2,'mArIAeSTUVOaqui19',1),
 (DEFAULT, 7259311100040482142, 'Este.miel.nada',2,3,2,'reynaSole345dad',1),
-(DEFAULT, 1703311100004174218, 'azucar.jupiter.uno',3,4,3,'5656marcosA',1),
-(DEFAULT, 4445711100005188906, 'dormir.nueve.azul',4,1,4,'hastalaraiz',1),
-(DEFAULT, 7051811100041548395, 'TIGRE.ojo.frio',5,3,1,'paredes10mil',1),
-(DEFAULT, 1543611100005566982, 'ROJO.pez.SUR',6,1,6,'montes1234',1),
-(DEFAULT, 1185011100082308893, 'MAL.rojo.AYER',7,3,1,'AldanaSOFI444',1);
+(DEFAULT, 1703311100004174218, 'azucar.jupiter.uno',3,4,3,'5656marcosA',2),
+(DEFAULT, 4445711100005188906, 'dormir.nueve.azul',4,1,4,'hastalaraiz',5),
+(DEFAULT, 7051811100041548395, 'TIGRE.ojo.frio',5,3,1,'paredes10mil',2),
+(DEFAULT, 1543611100005566982, 'ROJO.pez.SUR',6,1,6,'montes1234',4),
+(DEFAULT, 1185011100082308893, 'MAL.rojo.AYER',7,3,1,'AldanaSOFI444',4);
 
 #SELECT * FROM account;
 
@@ -85,11 +85,11 @@ INSERT INTO user_contacts VALUES
 
 #INSERT INTO MOVEMENTS 
 INSERT INTO movements VALUES
-(DEFAULT, 'get money', ''),
-(DEFAULT, 'send money', ''),
-(DEFAULT, 'fixed term', ''),
-(DEFAULT, 'donation', ''),
-(DEFAULT, 'investment', '');
+(DEFAULT, 'get money', 'ndustry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, ed in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages'),
+(DEFAULT, 'send money', 'tion of letters, as ktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search fo will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes'),
+(DEFAULT, 'fixed term', 'mour, or randomised words which dont look even sligre going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat '),
+(DEFAULT, 'donation', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard '),
+(DEFAULT, 'investment', 'ed not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages');
 
 #SELECT * FROM movements;
 
@@ -125,11 +125,11 @@ INSERT INTO send_money VALUES
 
 #INSERT INTO FIXED TERM TABLE
 INSERT INTO fixed_term VALUES
-(DEFAULT,5,300000,'20-12-22', '20-12-23', '85%','test',1),
-(DEFAULT,1,20000,'12-08-22', '12-08-23', '85%','test',1),
-(DEFAULT,4,1000,'03-03-21', '03-08-23', '75%','test',1),
-(DEFAULT,7,23000,'31-12-22','31-12-23','85%','test',1),
-(DEFAULT,2,80000,'01-01-23', '01-01-24', '85%','test',1);
+(DEFAULT,5,300000,'20-12-22', '20-12-23', '85%','21250',1),
+(DEFAULT,1,20000,'12-08-22', '12-08-23', '85%','1416',1),
+(DEFAULT,4,10000,'03-03-21', '03-08-23', '75%','625',1),
+(DEFAULT,7,23000,'31-12-22','31-12-23','85%','19166',1),
+(DEFAULT,2,80000,'01-01-23', '01-01-24', '85%','5000',1);
 
 #SELECT * FROM fixed_term;
 
