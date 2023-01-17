@@ -35,6 +35,8 @@ END$$
 CALL create_new_user(26330304,'27263303046','ROCIO CARRANZA',2345849304958342, 3,'ROcaranza@email.com', 0351423555);
 
 
+
+
 -- STORE PROCEDURE 2 PARA BORRAR UN USUARIO DE LA DB
 
 CREATE PROCEDURE delete_user(deleted INT)
@@ -44,4 +46,23 @@ DELETE FROM user WHERE id = deleted;
 CALL delete_user(8);
 
 SELECT * FROM user;
+
+-- funcion que retorna el numero de cuentas que utilizan un banco este me conviene hacerlo como un store procedure me dijo alberto
+
+delimiter $$
+CREATE PROCEDURE who_use_bank(id_account int)
+
+DETERMINISTIC
+
+BEGIN
+
+ END;
+ 
+$$
+
+-- ninguna cuenta utiliza banco numero 3
+CALL who_use_bank(1);
+-- dos cuentas utilizan el banco 4
+
+
 

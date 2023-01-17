@@ -34,13 +34,11 @@ CREATE or replace VIEW visualice_history AS
 
 FROM user u
 
-LEFT JOIN  history_of_movements hm ON hm.id_account_made = u.id
+LEFT JOIN  history_of_movements hm ON u.id = hm.id_account_made
 
 JOIN movements m on hm.id_movement = m.id
 
 JOIN answer a on hm.id_answer = a.id
-
-ORDER BY hm.id
 
 );
 
@@ -50,21 +48,38 @@ ORDER BY hm.id
 /*VISTA NUMERO 4 GET_M_OPERATION_D */
 CREATE or replace VIEW get_m_operation_d AS
 
-(SELECT u.name_surname AS USER, a.id ,uc.name_surname , gm.id_account_recive, gm.id_contact_send, amount,gm.DATE_OPERATION as date
+(SELECT u.name_surname AS user_recive, a.id ,uc.name_surname , gm.id_contact_send, amount,gm.DATE_OPERATION as date
 
 FROM user u
 
  JOIN account a ON u.id = a.id
 
- JOIN get_money gm ON a.id = gm.id
+ JOIN get_money gm ON a.id = gm.id_account_recive
 
- JOIN user_contacts uc ON uc.id = gm.id
+ JOIN user_contacts uc ON uc.id = gm.id_contact_send
  
- ORDER BY gm.date_operation
+
 );
 
 
 #SELECT * FROM get_m_operation_d;
 
 
--- VISTA NUMERO 5 
+-- VISTA NUMERO 5 SEND_M_OPERATION_D
+
+CREATE or replace VIEW send_m_operation_d AS
+
+(SELECT u.name_surname AS user_send, a.id ,uc.name_surname AS contact_recive, sm.id_contact_recive , amount,sm.DATE_OPERATION as date
+
+FROM user u
+
+ JOIN account a ON u.id = a.id
+
+ JOIN send_money sm ON a.id = sm.id_account_send
+
+ JOIN user_contacts uc ON uc.id = sm.id_contact_recive
+ 
+
+);
+
+#SELECT * FROM send_m_operation_d;

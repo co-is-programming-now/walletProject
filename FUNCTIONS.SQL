@@ -21,15 +21,16 @@ join movements on history_of_movements.id_movement = movements.id
 
 where movements.type ='send money' and user.id = id);
 
+-- ESTE USUARIO SI ENVIO DINERO
 SELECT SEND_MONEY_FUNC(2);
+-- ESTE USUARIO NO ENVIO DINERO
 SELECT SEND_MONEY_FUNC(5);
 
+
+
+
 -- FUNCION NUMERO 2 
--- funcion que retorna el numero de cuentas que utiliza un banco este me conviene hacerlo como un store procedure me dijo alberto
-
-select * from account;
-
-CREATE FUNCTION USE_BANK_F(id_acccount INT)
+CREATE FUNCTION USE_BANK_F(id_account INT)
 
 RETURNS VARCHAR(90)
 
@@ -44,8 +45,7 @@ FROM account a
     WHERE b.id = id_account
  );
 
-
 -- ninguna cuenta utiliza banco numero 3
 SELECT USE_BANK_F(3);
 -- dos cuentas utilizan el banco 4
-select use_bank_f(4);
+select USE_BANK_F(4);
