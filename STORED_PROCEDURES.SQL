@@ -33,36 +33,35 @@ END$$
 
 -- se creara el usuario 8
 CALL create_new_user(26330304,'27263303046','ROCIO CARRANZA',2345849304958342, 3,'ROcaranza@email.com', 0351423555);
+-- repetir sencencia create_new_user, luego consultar tabla usuario
+select * from user;
 
 
+-- STORE PROCEDURE 2 RETORNA QUE BANCO UTILIZA CADA USUARIO
 
+USE `virtualwallet`;
+DROP procedure IF EXISTS `who_use_bank`;
 
--- STORE PROCEDURE 2 PARA BORRAR UN USUARIO DE LA DB
-
-CREATE PROCEDURE delete_user(deleted INT)
-DELETE FROM user WHERE id = deleted;
-
--- borrar usuario 8
-CALL delete_user(8);
-
-SELECT * FROM user;
-
--- funcion que retorna el numero de cuentas que utilizan un banco este me conviene hacerlo como un store procedure me dijo alberto
-
-delimiter $$
-CREATE PROCEDURE who_use_bank(id_account int)
+DELIMITER $$
+USE `virtualwallet`$$
+CREATE PROCEDURE who_use_bank()
 
 DETERMINISTIC
 
 BEGIN
+	(SELECT b.name as bank_name, b.id as id_bank, u.name_surname as name_account
+		
+        FROM bank b
+        
+        JOIN account a ON b.id = a.id_bank
+        
+        JOIN user u ON a.id = u.id
+	);
+ END$$
 
- END;
- 
-$$
 
--- ninguna cuenta utiliza banco numero 3
-CALL who_use_bank(1);
--- dos cuentas utilizan el banco 4
+CALL who_use_bank();
+
 
 
 
