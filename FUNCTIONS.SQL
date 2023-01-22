@@ -1,20 +1,51 @@
 /*SCRIPT PARA LA CREACION DE FUNCIONES*/
 
+-- FUNCION NUMERO 1 SEND_MONEY_FUNC
+CREATE function SEND_MONEY_FUNC(id INT)
 
--- FUNCION 1 FUNCION PARA SABER SI UN USUARIO EXISTE EN LA DB
-CREATE FUNCTION does_it_exist(exist_user int)
-RETURNS INT
+RETURNS VARCHAR(50)
+
 DETERMINISTIC
-RETURN(SELECT id FROM user WHERE id = exist_user);
 
-SELECT does_it_exist(1);
-SELECT does_it_exist(12);
+READS SQL DATA
 
--- FUNCION 2 FUNCION PARA SABER EL MONTO QUE ENVIO UN USUARIO
-CREATE FUNCTION amount_user(user int)
-RETURNS INT
-DETERMINISTIC 
-RETURN(SELECT amount FROM send_money WHERE id_account_send = user);
+RETURN (SELECT count(*)
 
-SELECT amount_user(2);
-SELECT amount_user(5);
+from user
+
+join account on user.id = account.id_user
+
+join history_of_movements on account.id = history_of_movements.id_account_made
+
+join movements on history_of_movements.id_movement = movements.id
+
+where movements.type ='send money' and user.id = id);
+
+-- ESTE USUARIO SI ENVIO DINERO
+SELECT SEND_MONEY_FUNC(2);
+-- ESTE USUARIO NO ENVIO DINERO
+SELECT SEND_MONEY_FUNC(5);
+
+
+
+
+-- FUNCION NUMERO 2 
+CREATE FUNCTION USE_BANK_F(id_account INT)
+
+RETURNS VARCHAR(90)
+
+DETERMINISTIC
+
+READS SQL DATA
+
+RETURN (SELECT count(*)
+
+FROM account a
+	JOIN bank b ON b.id = a.id_bank
+    WHERE b.id = id_account
+ );
+
+-- ninguna cuenta utiliza banco numero 3
+SELECT USE_BANK_F(3);
+-- dos cuentas utilizan el banco 4
+select USE_BANK_F(4);
