@@ -16,21 +16,7 @@ SELECT * FROM mysql.user WHERE user LIKE 'only_read';
 SHOW GRANTS FOR only_read@localhost;
 
 -- OTORGAR permiso de lectura al usuario
-GRANT SELECT ON virtualwallet.account TO only_read@localhost;
-GRANT SELECT ON virtualwallet.answer TO only_read@localhost;
-GRANT SELECT ON virtualwallet.bank TO only_read@localhost;
-GRANT SELECT ON virtualwallet.card TO only_read@localhost;
-GRANT SELECT ON virtualwallet.coin TO only_read@localhost;
-GRANT SELECT ON virtualwallet.donations TO only_read@localhost;
-GRANT SELECT ON virtualwallet.fixed_term TO only_read@localhost;
-GRANT SELECT ON virtualwallet.get_money TO only_read@localhost;
-GRANT SELECT ON virtualwallet.history_of_movements TO only_read@localhost;
-GRANT SELECT ON virtualwallet.investment TO only_read@localhost;
-GRANT SELECT ON virtualwallet.movements TO only_read@localhost;
-GRANT SELECT ON virtualwallet.org TO only_read@localhost;
-GRANT SELECT ON virtualwallet.send_money TO only_read@localhost;
-GRANT SELECT ON virtualwallet.user TO only_read@localhost;
-GRANT SELECT ON virtualwallet.user_contacts TO only_read@localhost;
+GRANT SELECT ON virtualwallet.* TO only_read@localhost;
 
 -- REVISAR que permisos posee ahora el usuario
 SHOW GRANTS FOR only_read@localhost;
@@ -48,21 +34,7 @@ SELECT * FROM mysql.user WHERE user LIKE 'read_insert_update';
 SHOW GRANTS FOR read_insert_update@localhost;
 
 -- ESTABLECIENDO permisos de lectura, insercion y modificacion de datos sobre las tablas
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.account TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.answer TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.bank TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.card TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.coin TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.donations TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.fixed_term TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.get_money TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.history_of_movements TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.investment TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.movements TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.org TO only_read@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.send_money TO only_read@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.user TO read_insert_update@localhost;
-GRANT SELECT,INSERT, UPDATE ON virtualwallet.user_contacts TO read_insert_update@localhost;
+GRANT SELECT,INSERT, UPDATE ON virtualwallet.* TO read_insert_update@localhost;
 
 -- REVISAR que permisos posee ahora el usuario
 SHOW GRANTS FOR read_insert_update@localhost;
